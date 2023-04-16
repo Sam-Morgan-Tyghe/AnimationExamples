@@ -37,10 +37,6 @@ const primary = {
     40: '#707b89',
     20: '#f3f9ff',
   },
-  neutral: {
-    975: '#141414',
-    550: '#717175',
-  },
 }
 
 const secondary = {

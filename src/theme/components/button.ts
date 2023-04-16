@@ -46,45 +46,9 @@ export const Button = {
         borderColor: '#6185F2',
       },
     },
-    StartNow: {
-      bg: '#F65A00',
-      border: '2px solid transparent',
-      color: 'white',
-      '&:hover': {
-        bg: 'navy.80',
-      },
-      '&:active': {
-        bg: 'navy.60',
-      },
-      '&:focus': {
-        borderColor: '#6185F2',
-      },
-    },
     white: {
       bg: 'white',
       boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.04)',
-      '&:hover': {
-        bg: 'black.5',
-      },
-      '&:focus': {
-        bg: 'black.10',
-      },
-      '&:disabled': {
-        opacity: '70%',
-      },
-    },
-
-    active: {
-      bg: 'black.5',
-      '&:hover': {
-        bg: 'black.5',
-      },
-      '&:focus': {
-        bg: 'black.10',
-      },
-      '&:disabled': {
-        opacity: '70%',
-      },
     },
     text: {
       '&:hover': {

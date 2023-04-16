@@ -1,9 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`<Component /> > Snapshot 1`] = `
-<div
-  data-testid="component"
->
-  Your new web app here
-</div>
-`;

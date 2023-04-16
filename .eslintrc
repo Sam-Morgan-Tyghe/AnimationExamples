@@ -45,7 +45,7 @@
     "jsx-a11y/label-has-associated-control": 1,
     "no-nonoctal-decimal-escape": 0,
     "no-unsafe-optional-chaining": 0,
-    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     // Switching off excessively opinionated rules in "plugin:@typescript-eslint/recommended-requiring-type-checking"
     "@typescript-eslint/await-thenable": 0,

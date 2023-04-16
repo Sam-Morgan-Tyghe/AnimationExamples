@@ -1,6 +1,0 @@
-Region=eu-west-1
-MasterTemplate=master-web.yaml
-CFS3Bucket=carolinegirvan-dev-cf-1652217657
-StackName=carolinegirvandevwebstack
-StackPolicy=stack-policy.json
-CreationFailureAction=DO_NOTHING

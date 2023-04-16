@@ -6,9 +6,7 @@ import { Form } from './components/form'
 import { Heading } from './components/heading'
 import { Input } from './components/input'
 import { Select } from './components/select'
-import { skeletonTheme } from './components/skeleton'
 import { Text } from './components/text'
-import { Switch } from './components/switch'
 
 const fonts = {
   heading: `'Helvetica Now Display', sans-serif`,
@@ -29,13 +27,11 @@ export const theme = extendTheme({
   fonts,
   shadows,
   components: {
-    Skeleton: skeletonTheme,
     Heading,
     Button,
     Input,
     Form,
     Text,
     Select,
-    Switch,
   },
 })

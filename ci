@@ -3,7 +3,7 @@
 # Exit immediately if command returns bad exit code
 set -e
 
-ENABLED_SLACK_REFS=(develop qa main prod)
+ENABLED_SLACK_REFS=(develop master prod)
 export CI_COMMIT_AUTHOR=$(git log --format="%an" -n1)
 export CI_COMMIT_MESSAGE=$(git log --format="%B" -n1)
 export CI_COMMIT_URL="${CI_PROJECT_URL}/commit/${CI_COMMIT_SHA}"
@@ -26,28 +26,22 @@ function build_docker_for_pipeline() {
     # Build and tag with this pipeline ID so we can use it later, in test & release & deploy
     docker build --build-arg CI=${CI} --cache-from ${CI_REGISTRY_IMAGE}:${CI_BRANCH_SLUG} -t ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID} .
     docker push ${CI_REGISTRY_IMAGE}
-    docker image ls | grep hedgehoglab-client/carolinegirvan-web
 }
 
 function lint() {
-    # docker pull ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID}
+    docker pull ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID}
     docker run --rm -e CI=${CI} ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID} lint
 }
 
 function test() {
     # Pull image built within this pipeline previously
     docker pull ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID}
+    # Audit our dependencies for security vulnerabilities
+    docker run --rm -e CI=${CI} ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID} yarn run audit
     # Run npm test, via entrypoint.sh test action and generate coverage
     mkdir coverage && docker run --rm -e CI=${CI} \
       --mount type=bind,source="$(pwd)"/coverage,target=/app/coverage \
       ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID} test --coverage
-}
-
-function security() {
-    # Pull image built within this pipeline previously
-    docker pull ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID}
-    # Audit our dependencies for security vulnerabilities
-    docker run --rm -e CI=${CI} ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID} yarn audit
 }
 
 function release_docker_for_branch() {
@@ -63,28 +57,60 @@ function deploy() {
     # Run npm build, setting REACT_APP_* env variables
     export REACT_APP_ENVIRONMENT=${CI_ENVIRONMENT_NAME:-dev}
     export REACT_APP_SENTRY_VERSION="${CI_PROJECT_NAME}@$(jq -r '.version' package.json)-${CI_JOB_ID}"
-    echo $REACT_APP_SENTRY_VERSION
     echo "Building app via Docker, injecting following environment variables:"
     get_react_env_vars_raw_names
-    docker run --rm --mount type=bind,source=/home/hedgehoglab/actions-runner/_work/carolinegirvan-web/carolinegirvan-web/,target=/app \
+    docker run --rm --mount type=bind,source="$(pwd)"/,target=/app \
       $(get_react_env_vars_for_docker) \
       ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID} build
-    # create_sentry_release
+    create_sentry_release
     # Set up required environment variables for deployment
     export_deploy_ci_variables
     aws configure set default.s3.max_concurrent_requests 20
     # Sync build output with what is currently deployed
     # This also deletes files in bucket that aren't present in build output (cleans old releases)
     # Set a blanket cache policy to cache for up to 12hrs - used for versioned static assets
-    aws s3 sync dist s3://${CI_DEPLOY_BUCKET} --delete --cache-control "public,max-age=43200" --exclude "*.map"
+    aws s3 sync build s3://${CI_DEPLOY_BUCKET} --delete --cache-control "public,max-age=43200" --exclude "*.map"
     # Disable caching for specific files. In particular, ones that reference versioned assets
     # This means we can cache bust our versioned assets!
     export CACHE_DISABLED_PARAMS="--metadata-directive REPLACE --cache-control max-age=0,no-cache,no-store,must-revalidate --acl public-read"
-    # aws s3 cp s3://${CI_DEPLOY_BUCKET}/service-worker.js s3://${CI_DEPLOY_BUCKET}/service-worker.js --content-type application/javascript ${CACHE_DISABLED_PARAMS}
+    aws s3 cp s3://${CI_DEPLOY_BUCKET}/service-worker.js s3://${CI_DEPLOY_BUCKET}/service-worker.js --content-type application/javascript ${CACHE_DISABLED_PARAMS}
     aws s3 cp s3://${CI_DEPLOY_BUCKET}/index.html s3://${CI_DEPLOY_BUCKET}/index.html --content-type text/html ${CACHE_DISABLED_PARAMS}
-    # aws s3 cp s3://${CI_DEPLOY_BUCKET}/manifest.json s3://${CI_DEPLOY_BUCKET}/manifest.json --content-type application/json ${CACHE_DISABLED_PARAMS}
-    # aws s3 cp s3://${CI_DEPLOY_BUCKET}/asset-manifest.json s3://${CI_DEPLOY_BUCKET}/asset-manifest.json --content-type application/json ${CACHE_DISABLED_PARAMS}
-    # finalize_sentry_release
+    aws s3 cp s3://${CI_DEPLOY_BUCKET}/manifest.json s3://${CI_DEPLOY_BUCKET}/manifest.json --content-type application/json ${CACHE_DISABLED_PARAMS}
+    aws s3 cp s3://${CI_DEPLOY_BUCKET}/asset-manifest.json s3://${CI_DEPLOY_BUCKET}/asset-manifest.json --content-type application/json ${CACHE_DISABLED_PARAMS}
+    finalize_sentry_release
+}
+
+function deploy_qa_if_updated() {
+    last_qa_release=$(AWS_DEFAULT_REGION=eu-west-1 AWS_ACCESS_KEY_ID=AKIAJ6355LQD3QU4IK3A AWS_SECRET_ACCESS_KEY=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 \
+        aws dynamodb get-item --table-name gitlab-react-qa-releases --key "{\"ProjectId\": {\"N\": \"${CI_PROJECT_ID}\"}}" \
+        --output text --query "Item.[LastReleaseSha.S,LastReleaseTimestamp.N]"
+    )
+    echo "Last QA Release: ${last_qa_release}"
+    # If first QA release
+    if [ "${last_qa_release}" = "None" ]; then
+        deploy && update_last_qa_release && deploy_success_slack
+        return 0
+    fi
+    last_qa_release_sha=$(echo "${last_qa_release}" | awk '{print $1}')
+    last_qa_release_timestamp=$(echo "${last_qa_release}" | awk '{print $2}')
+    # If current commit is same as last release, or last release isn't in history (not sure how)
+    if [ "${CI_COMMIT_SHA}" = "${last_qa_release_sha}" ] || ! git merge-base --is-ancestor ${last_qa_release_sha} HEAD; then
+        no_qa_updates_slack ${last_qa_release_sha} ${last_qa_release_timestamp}
+        return 0
+    fi
+    # If last release occurred previously in branch
+    deploy && update_last_qa_release && deploy_success_slack
+    return 0
+}
+
+function update_last_qa_release() {
+    AWS_DEFAULT_REGION=eu-west-1 AWS_ACCESS_KEY_ID=AKIAJ6355LQD3QU4IK3A AWS_SECRET_ACCESS_KEY=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 \
+        aws dynamodb put-item --table-name gitlab-react-qa-releases --item \
+        "{\
+            \"ProjectId\": {\"N\": \"${CI_PROJECT_ID}\"}, \
+            \"LastReleaseSha\": {\"S\": \"${CI_COMMIT_SHA}\"}, \
+            \"LastReleaseTimestamp\": {\"N\": \"$(date +%s)\"} \
+        }"
 }
 
 #------------------------------------------

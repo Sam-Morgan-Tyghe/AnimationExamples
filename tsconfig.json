@@ -27,7 +27,7 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["vite.config.ts", "**/*.ts", "**/*.tsx", "/src/api/types.d.ts"],
+  "include": ["vite.config.ts", "**/*.ts", "**/*.tsx", "vite.config.js"],
 
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]

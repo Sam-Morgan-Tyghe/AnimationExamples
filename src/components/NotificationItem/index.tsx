@@ -1,7 +1,7 @@
 import { Avatar, Flex, Image, Text } from '@chakra-ui/react'
+import notificationBell from '~/assets/icons/Reminder.svg'
 import chatBubble from '~/assets/icons/chatBubble.svg'
 
-import notificationBell from '../../assets/icons/Reminder.svg'
 import SVG from '../SVG'
 
 type notificationItemProps = {
