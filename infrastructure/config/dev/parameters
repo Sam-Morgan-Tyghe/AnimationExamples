@@ -1,0 +1,4 @@
+Project=carolinegirvan
+Environment=dev
+CloudFrontAcmCertificateArn=arn:aws:acm:us-east-1:797813838213:certificate/d0ae31d3-e340-4f6b-a150-256e21214d7a
+CloudFrontAliases=web.dev.carolinegirvan.net

@@ -1,0 +1,23 @@
+{
+  "authSelections": "identityPoolAndUserPool",
+  "resourceName": "carolinegirvanweb1c6ce8f16",
+  "serviceType": "imported",
+  "region": "eu-west-1",
+  "usernameAttributes": [
+    "email",
+    "phone_number"
+  ],
+  "authProvidersUserPool": [
+    "Google",
+    "SignInWithApple"
+  ],
+  "requiredAttributes": [],
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [],
+  "mfaConfiguration": "OFF",
+  "autoVerifiedAttributes": [
+    "email",
+    "phone_number"
+  ],
+  "mfaTypes": []
+}

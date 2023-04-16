@@ -1,0 +1,4 @@
+Project=carolinegirvan
+Environment=uat
+CloudFrontAcmCertificateArn=arn:aws:acm:us-east-1:250452919103:certificate/cdd254c3-b2a5-4f67-bfea-3a15991868b1
+CloudFrontAliases=web.uat.carolinegirvan.net

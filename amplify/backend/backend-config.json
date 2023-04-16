@@ -1,0 +1,117 @@
+{
+  "auth": {
+    "carolinegirvanweb1c6ce8f16": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_allowUnauthenticatedIdentities": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_appleAppId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_authRoleArn": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_authRoleName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_identityPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_unauthRoleArn": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_unauthRoleName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    },
+    "AMPLIFY_auth_carolinegirvanweb1c6ce8f16_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "carolinegirvanweb1c6ce8f16"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+Project=carolinegirvan
+Environment=qa
+CloudFrontAcmCertificateArn=arn:aws:acm:us-east-1:096441934118:certificate/d6b852b0-baad-4458-af41-2c41aaae0e52
+CloudFrontAliases=web.qa.carolinegirvan.net

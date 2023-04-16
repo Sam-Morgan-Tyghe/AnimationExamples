@@ -1,0 +1,84 @@
+// Delete this file before starting a new project
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.welcome__logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.welcome__header {
+  background-color: #288ec1;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.welcome__title {
+  font-size: 1.5em;
+  line-height: 4;
+}
+
+.welcome__intro {
+  font-size: large;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.welcome__sub-menu-wrapper {
+  position: relative;
+}
+
+nav > ul {
+  background: #f3f3f3;
+}
+
+nav > ul > li {
+  display: inline-block;
+}
+
+nav ul li a {
+  display: inline-block;
+  padding: 20px 44px;
+  color: #666;
+  text-align: left;
+  text-decoration: none;
+}
+
+.active {
+  background: #008cba;
+  color: #fff;
+}
+
+nav ul li a:hover {
+  background: #fff;
+  color: #008cba;
+}
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  height: 50vh;
+  font-family: monospace;
+  color: #2f8fbf;
+}

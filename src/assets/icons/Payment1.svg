@@ -1,0 +1,10 @@
+import React from "react";
+
+    function Payment1({}) {
+      return (<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="40" height="40" rx="8" fill="black" fill-opacity="0.1" />
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M17 15C17 13.3431 18.3431 12 20 12C21.1635 12 22.1584 12.6648 22.6567 13.6675L25.3433 12.3325C24.3689 10.3718 22.3702 9 20 9C16.6863 9 14 11.6863 14 15V16H12.5C12.2239 16 12 16.2239 12 16.5V29.5C12 29.7761 12.2239 30 12.5 30H27.5C27.7761 30 28 29.7761 28 29.5V16.5C28 16.2239 27.7761 16 27.5 16H17V15ZM22 23C22 24.1046 21.1046 25 20 25C18.8954 25 18 24.1046 18 23C18 21.8954 18.8954 21 20 21C21.1046 21 22 21.8954 22 23Z" fill="black" />
+                </svg>);
+    }
+  
+  

@@ -1,0 +1,4 @@
+Project=carolinegirvan
+Environment=prod
+CloudFrontAcmCertificateArn=
+CloudFrontAliases=web.carolinegirvan.net

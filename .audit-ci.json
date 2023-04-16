@@ -1,0 +1,5 @@
+{
+    "package-manager": "yarn",
+    "low": true,
+    "allowlist": []
+  }
