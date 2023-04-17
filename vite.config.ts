@@ -7,10 +7,10 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    global: {},
+    // global: {}, // disable to run storybook build
   },
   esbuild: {
-    jsxInject: `import React from 'react'`,
+    //  jsxInject: `import React from 'react'`, // disable to run storybook build
   },
   server: {
     watch: {

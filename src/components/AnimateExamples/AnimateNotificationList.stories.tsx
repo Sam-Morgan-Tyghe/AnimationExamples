@@ -22,6 +22,9 @@ const Template: ComponentStory<typeof AnimateAllChildren> = args => (
       {dummyNotificationsArray.map(notification => (
         <NotificationItem key={notification.id} {...notification} />
       ))}
+      {dummyNotificationsArray.map(notification => (
+        <NotificationItem key={notification.id} {...notification} />
+      ))}
     </AnimateAllChildren>
   </Center>
 )
