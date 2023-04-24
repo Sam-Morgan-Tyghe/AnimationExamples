@@ -1,18 +1,21 @@
 import { Center } from '@chakra-ui/react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { AnimateAllChildren } from '~/Utils/Animate'
-import { dummyNotificationsArray } from '~/Utils/consts/consts'
+import { AnimateAllChildren } from '~/utils/Animate'
+import { dummyNotificationsArray } from '~/utils/consts/consts'
 
 import NotificationItem from '../NotificationItem'
 
 export default {
   component: NotificationItem,
-  title: 'Animations/NotifcationList',
+  title: 'Animations/OnView',
 } as ComponentMeta<typeof NotificationItem>
 
 const Template: ComponentStory<typeof AnimateAllChildren> = args => (
   <Center flexDirection="column">
     <AnimateAllChildren {...args}>
+      {dummyNotificationsArray.map(notification => (
+        <NotificationItem key={notification.id} {...notification} />
+      ))}
       {dummyNotificationsArray.map(notification => (
         <NotificationItem key={notification.id} {...notification} />
       ))}

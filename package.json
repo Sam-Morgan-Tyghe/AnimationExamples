@@ -23,7 +23,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "deploy-storybook": "gh-pages -d storybook-static",
-    "chromatic": "npx chromatic --project-token=3d841b0338cf --storybook-build-dir storybook-static"
+    "chromatic": "npx chromatic --project-token=0107cf19af37 --storybook-build-dir storybook-static"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
@@ -67,6 +67,7 @@
     "@storybook/addon-interactions": "^7.0.5",
     "@storybook/addon-links": "^7.0.5",
     "@storybook/blocks": "^7.0.5",
+    "@storybook/builder-vite": "^7.0.5",
     "@storybook/react": "^7.0.5",
     "@storybook/react-vite": "^7.0.5",
     "@storybook/testing-library": "^0.0.14-next.2",

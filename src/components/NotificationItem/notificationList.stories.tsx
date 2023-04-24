@@ -1,4 +1,4 @@
-import { dummyNotificationsArray } from '~/Utils/consts/consts'
+import { dummyNotificationsArray } from '~/utils/consts/consts'
 
 import NotificationItem from '.'
 

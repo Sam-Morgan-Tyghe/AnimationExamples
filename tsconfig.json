@@ -27,7 +27,7 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["vite.config.ts", "**/*.ts", "**/*.tsx", "vite.config.js"],
+  "include": ["vite.config.ts", "**/*.ts", "**/*.tsx", "vite.config.js", "src/utils/Animate.jsx"],
 
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]

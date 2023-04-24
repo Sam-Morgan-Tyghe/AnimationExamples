@@ -1,5 +1,8 @@
-import type { StorybookConfig } from '@storybook/react-vite'
+import type { StorybookConfig } from '@storybook/react-vite';
+const { mergeConfig } = require('vite');
+
 const config: StorybookConfig = {
+  core: { builder: "@storybook/builder-vite" },
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
@@ -12,6 +15,15 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: 'tag',
+  },
+  async viteFinal(config, { configType }) {
+    // return the customized config
+    return mergeConfig(config, {
+      // customize the Vite config here
+      resolve: {
+        alias: { foo: 'bar' },
+      },
+    });
   },
 }
 export default config
